@@ -22,7 +22,7 @@ Año   = 2021
     #################################################################
 
 
-    [ FECHA; HORA; MINUTOS POR PRUEBA; MEMORIA DISPONIBLE; MEMORIA USADA; PORCENTAJE; CONECTADOS RED; IP'S ]
+    [ DIA ; MES ; AÑO ; HORA ; MINUTOS ; MINUTOS POR PRUEBA; MEMORIA DISPONIBLE; MEMORIA USADA; PORCENTAJE; CONECTADOS RED; IP'S ]
 
 
 
@@ -44,8 +44,8 @@ class RecolectorInformacion():
 
     def generarRegistro(self , minutos ):
         struct_time = time.localtime()
-        date = str(struct_time[2])+"/"+str(struct_time[1])+"/"+str(struct_time[0])
-        hour = str(struct_time[3])+":"+str(struct_time[4])
+        date = str(struct_time[2])+";"+str(struct_time[1])+";"+str(struct_time[0])
+        hour = str(struct_time[3])+";"+str(struct_time[4])
         #print(struct_time)
         total_memory = os.popen("free | grep \"Mem\" | awk '{ print $2}'").read().replace("\n","").replace(" ","")
         used_memory = os.popen("free | grep \"Mem\" | awk '{ print $3}'").read().replace("\n","").replace(" ","")
@@ -92,4 +92,4 @@ class RecolectorInformacion():
 
 manager  = RecolectorInformacion()
 manager.crearDirectorioAlmacen()
-manager.generarRegistro(5)
+manager.generarRegistro(1)
