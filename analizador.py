@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 import math
-
+import time
 """
 Autor = Julián Guillermo Zapata Rugeles
 Año   = 2021
@@ -98,6 +98,11 @@ def reporteDia():
     plt.axhline(y=c, color='r', linestyle='-')
     plt.plot(eje_x, eje_y, color='#a12424' ,linestyle='dashed')
     #plt.plot(eje_x2, eje_y2, color='#4bb27b' ,linestyle='dashed')
+
+    file_save = time.localtime()[0:3]
+    os.system("mkdir REPORTES/ 2>/dev/null")
+    file_name = "REPORTES/"+str(file_save[0])+"-"+str(file_save[1])+"-"+str(file_save[2])+".png"
+    plt.savefig(file_name)
     plt.show()
     #new_data_frame['']
 
