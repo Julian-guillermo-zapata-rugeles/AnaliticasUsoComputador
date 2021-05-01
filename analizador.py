@@ -1,4 +1,6 @@
 import pandas as pd
+import os
+import math
 
 """
 Autor = Julián Guillermo Zapata Rugeles
@@ -37,10 +39,17 @@ def reporteEspecifico():
     mes_buscado   =  int(input("Mes  : "))
     dataframeBuscado = dataframe[(dataframe.dia == fecha_buscada)&(dataframe.hora == hora_buscada)]
     #mayorUsoCpu=dataframe[(dataframe.porcentaje_usado>60)&(dataframe.porcentaje_usado<90)]
-    print(dataframeBuscado)
-    print("porcentaje promedio usado  :",dataframeBuscado['porcentaje_usado'].mean())
-    print("Promedio de activos en red :",dataframeBuscado['dispositivos_activos'].mean())
-
+    os.system("clear");
+    print("+------------------------- resultados -------------------------+")
+    print(dataframeBuscado.info())
+    print("+------------------------- analiticas -------------------------+\n")
+    print("promedio RAM usada             : ",dataframeBuscado['porcentaje_usado'].mean(),"%")
+    print("Promedio de activos en red     : ",math.ceil(dataframeBuscado['dispositivos_activos'].mean()))
+    print("Desviacion standard conectados : ",dataframeBuscado['dispositivos_activos'].std())
+    print("Maximo dispositivo detectados  : ",dataframeBuscado['dispositivos_activos'].max())
+    print("Minimo dispositivo detectados  : ",dataframeBuscado['dispositivos_activos'].min())
+    print("Minutos activos en la hora     : ",dataframeBuscado['minutos_prueba'].sum() )
+    print("Porcentaje actividad           : ",(dataframeBuscado['minutos_prueba'].sum()*100)/60,"%")
 
 
 
@@ -54,3 +63,5 @@ dataframe = pd.read_csv ("ANALITICAS/analiticas.csv", delimiter =";" , names=nam
 while salir == False:
     print(menu)
     entrada = str(input("eleccion : "))
+    if(entrada)=="1":
+        reporteEspecifico()
