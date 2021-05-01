@@ -71,7 +71,35 @@ def reporteDia():
     print("equivalente  (horas x dia)     : ",dataframeBuscado['minutos_prueba'].sum()/60,"horas")
     #print("Porcentaje actividad           : ",(dataframeBuscado['minutos_prueba'].sum()*100)/60,"%")
 
+    dataframeHoras = dataframe['hora'].unique() # obtendré los horas disponibles durante el día
+    tmp_list_prom = []
+    tmp_list_hour = []
+    for hour_avalibles in dataframeHoras:
+        #print(type(hour_avalibles))
+        tmp_data = dataframeBuscado[dataframeBuscado.hora == hour_avalibles]
+        promedio_dispositivos = tmp_data['dispositivos_activos'].mean()
+        tmp_list_prom.append(promedio_dispositivos)
+        tmp_list_hour.append(hour_avalibles)
 
+    new_data_frame = pd.DataFrame()
+    new_data_frame['hora']=tmp_list_hour
+    new_data_frame['promedio']=tmp_list_prom
+
+    #print(new_data_frame)
+    eje_x = new_data_frame['hora']
+    eje_y = new_data_frame['promedio']
+
+    #eje_x2 = dataframeBuscado['minutos']
+    #eje_y2 = dataframeBuscado['dispositivos_activos']
+
+
+    c=new_data_frame['promedio'].mean()
+    plt.title("( Proyecto ARCU Julian Guillermo Zapata Rugeles) Analiticas del  dia {}  --> mes {}".format(dia_buscado,mes_buscado))
+    plt.axhline(y=c, color='r', linestyle='-')
+    plt.plot(eje_x, eje_y, color='#a12424' ,linestyle='dashed')
+    #plt.plot(eje_x2, eje_y2, color='#4bb27b' ,linestyle='dashed')
+    plt.show()
+    #new_data_frame['']
 
 
 
