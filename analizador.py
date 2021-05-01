@@ -19,26 +19,12 @@ Objetivo :
 
 
 
-menu = """
-Desarrollado por Julián Guillermo Zapata Rugeles
-
-+--------------------- analizador de datos ---------------------+\n
-1 ) reporte específico (mes dia hora)
-2 ) reporte por dia
-2 ) reporte mensual
-3 ) reporte rango horas
-
-"""
-
-
-
-
 def reporteEspecifico():
     global dataframe
     hora_buscada  =  int(input("Hora : "))
-    fecha_buscada =  int(input("Dia  : "))
+    dia_buscado =    int(input("Dia  : "))
     mes_buscado   =  int(input("Mes  : "))
-    dataframeBuscado = dataframe[(dataframe.dia == fecha_buscada)&(dataframe.hora == hora_buscada)]
+    dataframeBuscado = dataframe[(dataframe.dia == dia_buscado)&(dataframe.hora == hora_buscada)]
     #mayorUsoCpu=dataframe[(dataframe.porcentaje_usado>60)&(dataframe.porcentaje_usado<90)]
     os.system("clear");
     print("+------------------------- resultados -------------------------+")
@@ -52,6 +38,38 @@ def reporteEspecifico():
     print("Minutos activos en la hora     : ",dataframeBuscado['minutos_prueba'].sum() )
     print("Porcentaje actividad           : ",(dataframeBuscado['minutos_prueba'].sum()*100)/60,"%")
 
+    titulo = "conexiones por minuto dia {} mes {} Desde {} hasta {}" .format(dia_buscado,mes_buscado,hora_buscada,hora_buscada+1)
+    eje_x = dataframeBuscado['minutos']
+    eje_y = dataframeBuscado['dispositivos_activos']
+
+    c=dataframeBuscado['dispositivos_activos'].mean()
+    plt.title(titulo)
+    plt.axhline(y=c, color='r', linestyle='-')
+    plt.plot(eje_x, eje_y, color='#a12424' ,linestyle='dashed')
+    plt.show()
+
+
+
+
+
+def reporteDia():
+    os.system("clear")
+    global dataframe
+    dia_buscado = int(input("Ingrese el dia : "))
+    mes_buscado = int(input("Ingrese el mes : "))
+    dataframeBuscado = dataframe[(dataframe.mes == mes_buscado)&(dataframe.dia == dia_buscado)]
+    #print(dataframe)
+    print("+------------------------- resultados -------------------------+")
+    print(dataframeBuscado.info())
+    print("+------------------------- analiticas -------------------------+\n")
+    print("promedio RAM usada             : ",dataframeBuscado['porcentaje_usado'].mean(),"%")
+    print("Promedio de activos en red     : ",math.ceil(dataframeBuscado['dispositivos_activos'].mean()))
+    print("Desviacion standard conectados : ",dataframeBuscado['dispositivos_activos'].std())
+    print("Maximo dispositivo detectados  : ",dataframeBuscado['dispositivos_activos'].max())
+    print("Minimo dispositivo detectados  : ",dataframeBuscado['dispositivos_activos'].min())
+    print("Minutos activos en la dia      : ",dataframeBuscado['minutos_prueba'].sum() )
+    print("equivalente  (horas x dia)     : ",dataframeBuscado['minutos_prueba'].sum()/60,"horas")
+    #print("Porcentaje actividad           : ",(dataframeBuscado['minutos_prueba'].sum()*100)/60,"%")
 
 
 
@@ -71,8 +89,21 @@ names_header = ['dia','mes','año','hora','minutos','minutos_prueba','memoria_to
 dataframe = pd.read_csv ("ANALITICAS/analiticas.csv", delimiter =";" , names=names_header)
 
 
+menu = """
+Desarrollado por Julián Guillermo Zapata Rugeles
+
++--------------------- analizador de datos ---------------------+\n
+1 ) reporte específico (mes dia hora)
+2 ) reporte por dia
+2 ) reporte mensual
+3 ) reporte rango horas
+
+"""
+
 while salir == False:
     print(menu)
     entrada = str(input("eleccion : "))
-    if(entrada)=="1":
+    if entrada=="1":
         reporteEspecifico()
+    elif entrada=="2":
+        reporteDia()
