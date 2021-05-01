@@ -26,8 +26,6 @@ def ping(ip_probe):
     return resultado_busqueda
 
 
-
-
 def BusquedaPorRango(ip_start,ip_finish):
     # esta función recibe dos rangos de busqueda
     # solo se alternan los ultimos rangos para dicha función 192.168.1.X

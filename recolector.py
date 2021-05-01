@@ -1,6 +1,7 @@
 import os
 import time
 import dispositivos
+import speed
 """
 
 
@@ -22,7 +23,8 @@ Año   = 2021
     #################################################################
 
 
-    [ DIA ; MES ; AÑO ; HORA ; MINUTOS ; MINUTOS POR PRUEBA; MEMORIA DISPONIBLE; MEMORIA USADA; PORCENTAJE; CONECTADOS RED; IP'S ]
+    [ DIA ; MES ; AÑO ; HORA ; MINUTOS ; MINUTOS POR PRUEBA; MEMORIA DISPONIBLE;
+      MEMORIA USADA; PORCENTAJE; CONECTADOS RED; IP'S ;VEL BAJADA ; VEL SUBIDA ]
 
 
 
@@ -64,7 +66,8 @@ class RecolectorInformacion():
         print("Nivel memoria : ",memory_porcent,"%")
         print("\n--------------------------------\n")
         conectados = dispositivos.BusquedaPorRango(20,50)
-        salida = str(date) + ";" + str(hour) + ";" + str(minutos) +";"+ str(total_memory) + ";" + str(used_memory) +";"+str(memory_porcent)+";"+conectados
+        velocidad = speed.obtenerVelocidad()
+        salida = str(date) + ";" + str(hour) + ";" + str(minutos) +";"+ str(total_memory) + ";" + str(used_memory) +";"+str(memory_porcent)+";"+conectados+";"+velocidad
         file = self.__ruta_uso+ self.__save_folder + self.__file_name
         archivo_salida = open(file,"a")
         archivo_salida.write(salida)
