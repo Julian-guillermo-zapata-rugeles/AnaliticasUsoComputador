@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 import os
 import math
 
@@ -50,6 +51,16 @@ def reporteEspecifico():
     print("Minimo dispositivo detectados  : ",dataframeBuscado['dispositivos_activos'].min())
     print("Minutos activos en la hora     : ",dataframeBuscado['minutos_prueba'].sum() )
     print("Porcentaje actividad           : ",(dataframeBuscado['minutos_prueba'].sum()*100)/60,"%")
+
+
+
+
+
+
+
+
+
+
 
 
 
